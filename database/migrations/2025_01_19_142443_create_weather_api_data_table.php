@@ -17,11 +17,12 @@ return new class extends Migration
             $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
             $table->bigInteger('weather_api_id')->unsigned();
             $table->foreign('weather_api_id')->references('id')->on('weather_apis')->onDelete('cascade');
+            $table->string('step');
             $table->date('date');
             $table->json('time');
-            $table->json('temperature_2m');
+            $table->string('temperature_unit');
+            $table->json('temperature');
             $table->json('precipitation');
-            $table->json('weather_code');
             $table->timestamps();
         });
     }
