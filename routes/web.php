@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\WeatherDataController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [HomepageController::class, 'index'])->name('homepage');
+
+Route::prefix('locations')->group(function () {
+    Route::prefix('ajax')->group(function () {
+        Route::post('/store', [LocationController::class, 'store']);
+    });
+});
+
+Route::prefix('weather-data')->group(function () {
+    Route::prefix('ajax')->group(function () {
+        Route::post('/details/{id}', [WeatherDataController::class, 'weatherDetails']);
+    });
 });
