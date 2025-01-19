@@ -44,6 +44,7 @@ class OpenMeteoService implements WeatherServiceInterface
             // Check if the record for this date and forecast type already exists
             $existingRecord = WeatherApiData::where('location_id', $locationId)
                 ->where('date', $date)
+                ->where('weather_api_id',$apiType)
                 ->where('step', $forecastType)
                 ->first();
     
@@ -95,6 +96,7 @@ class OpenMeteoService implements WeatherServiceInterface
             // We now need to check if there's existing data for this location and date
             $existingRecord = WeatherApiData::where('location_id', $locationId)
                 ->where('date', $date)
+                ->where('weather_api_id',$apiType)
                 ->where('step', $forecastType)
                 ->first();
             $dailyData = [

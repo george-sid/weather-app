@@ -35,12 +35,79 @@ class WeatherApiService implements WeatherServiceInterface
 
     public function saveHourlyWeatherData(array $data, int $locationId, int $apiType, string $forecastType): void
     {
-        dd($locationId);
+        foreach ($data['forecast']['forecastday'] as $day) {
+            $date = $day['date']; 
+            $hourlyTimes = [];
+            $hourlyTemperatures = [];
+            $hourlyPrecipitations = [];
+    
+            foreach ($day['hour'] as $hourData) {
+                $time = date('H:i', strtotime($hourData['time']));
+                $hourlyTimes[] = $time;
+                $hourlyTemperatures[] = $hourData['temp_c'];
+                $hourlyPrecipitations[] = $hourData['precip_mm'];
+            }
+    
+            // Prepare the hourly data as JSON
+            $hourlyData = [
+                'location_id' => $locationId,
+                'weather_api_id' => $apiType,
+                'date' => $date,
+                'time' => $hourlyTimes,
+                'temperature' => $hourlyTemperatures,
+                'precipitation' => $hourlyPrecipitations,
+                'temperature_unit' => "°C",
+                'step' => $forecastType,
+            ];
+    
+            // Check if there's existing data for this date and location
+            $existingRecord = WeatherApiData::where('location_id', $locationId)
+                ->where('date', $date)
+                ->where('weather_api_id',$apiType)
+                ->where('step', $forecastType)
+                ->first();
+    
+            // Update existing record or create a new one
+            if ($existingRecord) {
+                $existingRecord->update($hourlyData);
+            } else {
+                WeatherApiData::create($hourlyData);
+            }
+        }
     }
     
+
     public function saveDailyWeatherData(array $data, int $locationId, int $apiType, string $forecastType): void
     {
-        dd($locationId);
+        foreach ($data['forecast']['forecastday'] as $day) {
+            $date = $day['date']; 
+            $time = '00:00 - 23:59';
+            // Prepare the hourly data as JSON
+            $hourlyData = [
+                'location_id' => $locationId,
+                'weather_api_id' => $apiType,
+                'date' => $date,
+                'time' => [$time],
+                'temperature' => [$day['day']['avgtemp_c']],
+                'precipitation' => [$day['day']['totalprecip_mm']],
+                'temperature_unit' => "°C",
+                'step' => $forecastType,
+            ];
+    
+            // Check if there's existing data for this date and location
+            $existingRecord = WeatherApiData::where('location_id', $locationId)
+                ->where('date', $date)
+                ->where('weather_api_id',$apiType)
+                ->where('step', $forecastType)
+                ->first();
+    
+            // Update existing record or create a new one
+            if ($existingRecord) {
+                $existingRecord->update($hourlyData);
+            } else {
+                WeatherApiData::create($hourlyData);
+            }
+        }
     }
     
     
