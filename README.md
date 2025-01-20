@@ -49,12 +49,10 @@ Run the database seeder
 
     php artisan db:seed
 
-Start the local development server
+If you'd like to start the local development server, you can run the following command
 
     php artisan serve
 
 The scheduled task is set to run daily at 06:00. To execute it immediately, you can use the command
 
     php artisan schedule:run
-
-You can now access the server at http://localhost:8000
