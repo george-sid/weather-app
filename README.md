@@ -56,3 +56,5 @@ If you'd like to start the local development server, you can run the following c
 The scheduled task is set to run daily at 06:00. To execute it immediately, you can use the command
 
     php artisan schedule:run
+
+On the homepage, enter a city (e.g., Thessaloniki) to view weather data displayed in tables, including details like temperature, precipitation, and time-based forecasts
