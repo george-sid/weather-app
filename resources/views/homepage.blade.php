@@ -8,7 +8,7 @@
 		<input class="city-input" type="text" name="city" placeholder="E.g., New York, London, Tokyo">
 		<button class="search-btn">Search</button>
 	</div>
-	<div class="weather-data">
+	<div class="weather-data" id="weather-details-container">
 		
 	</div>
 </div>

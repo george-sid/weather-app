@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
+//this is service to for weather meteto to fetch data from api and store in database
 class WeatherApiService implements WeatherServiceInterface
 {
     public function fetchWeatherData(int $locationId, string $forecastType): array

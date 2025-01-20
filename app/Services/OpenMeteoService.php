@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
+//this is service to for open meteto to fetch data from api and store in database
 class OpenMeteoService implements WeatherServiceInterface
 {
     public function fetchWeatherData(int $locationId, string $forecastType): array
@@ -56,9 +57,9 @@ class OpenMeteoService implements WeatherServiceInterface
             // Loop through all the hours and append corresponding data for each date
             foreach ($data['hourly']['time'] as $subIndex => $subTime) {
                 if ((new \DateTime($subTime))->format('Y-m-d') === $date) {
-                    $times[] = (new \DateTime($subTime))->format('H:i'); // Extract time in H:i format
-                    $temperatures[] = round($data['hourly']['temperature_2m'][$subIndex], 1); // Round the temperature
-                    $precipitations[] = round($data['hourly']['precipitation'][$subIndex], 1); // Round the precipitation
+                    $times[] = (new \DateTime($subTime))->format('H:i');
+                    $temperatures[] = round($data['hourly']['temperature_2m'][$subIndex], 1);
+                    $precipitations[] = round($data['hourly']['precipitation'][$subIndex], 1);
                 }
             }
     

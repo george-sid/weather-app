@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('weather:fetch')->dailyAt('06:00')->appendOutputTo(storage_path('logs/weather_fetch.log'));
     }
 
     /**

@@ -14,7 +14,7 @@ class WeatherApiSeeder extends Seeder
     public function run(): void
     {
         WeatherApi::create([
-            'name' => 'Open-meteo',
+            'name' => 'Open meteo',
             'website_url' => 'https://open-meteo.com/',
         ]);
         WeatherApi::create([

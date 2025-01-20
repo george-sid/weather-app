@@ -15,7 +15,7 @@ searchBtn?.addEventListener('click', function () {
         if(data.error){
             alert(data.error)
         }else{
-            console.log(data.id);
+            //console.log(data.id);
             // Call the function to fetch location weather data
             fetchLocationWeatherData(data.id);
         }
@@ -25,7 +25,7 @@ searchBtn?.addEventListener('click', function () {
     });
 });
 
-
+// Fetch detailed weather data when clicking a location
 function fetchLocationWeatherData(locationId) {
     fetch(`/weather-data/ajax/details/${locationId}`, {
         method: 'POST',
@@ -34,12 +34,31 @@ function fetchLocationWeatherData(locationId) {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(data => {
-        console.log('Location Details:', data);
-        // You can handle the details data here, e.g., display it on the page
+        const weatherTable = document.querySelector('#weather-details-container');
+        weatherTable.innerHTML = ''; 
+        weatherTable.innerHTML = data;
+
+        const toggleButtons = document.querySelectorAll('.toggleDetails');
+    
+        toggleButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const row = button.closest('tr');
+                const childRow = row.nextElementSibling; 
+                
+                if (childRow.style.display === 'none') {
+                    childRow.style.display = '';
+                    button.textContent = '-';
+                } else {
+                    childRow.style.display = 'none';
+                    button.textContent = '+';
+                }
+            });
+        });
     })
     .catch(error => {
         console.error('Error fetching location details:', error);
     });
 }
+
