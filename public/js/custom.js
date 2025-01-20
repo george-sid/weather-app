@@ -15,6 +15,7 @@ searchBtn?.addEventListener('click', function () {
         if(data.error){
             alert(data.error)
         }else{
+            alert('Η ενέργεια πραγματοποιήθηκε επιτυχώς')
             //console.log(data.id);
             // Call the function to fetch location weather data
             fetchLocationWeatherData(data.id);
